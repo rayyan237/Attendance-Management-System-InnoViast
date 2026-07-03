@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Download } from 'lucide-react';
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://attendance-management-system-innoviast.onrender.com/api';
 
 export default function ReportsView({ token }) {
   const [reports, setReports] = useState([]);

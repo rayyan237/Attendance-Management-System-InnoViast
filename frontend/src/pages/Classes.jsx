@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://attendance-management-system-innoviast.onrender.com/api';
 
 export default function ClassesView({ token, user }) {
   const [classes, setClasses] = useState([]);

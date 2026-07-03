@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Users, BookOpen, CheckSquare } from 'lucide-react';
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://attendance-management-system-innoviast.onrender.com/api';
 
 export default function Dashboards({ token, user }) {
   const [stats, setStats] = useState({ totalStudents: 0, totalClasses: 0, todaySessions: 0 });

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Shield, AlertCircle } from 'lucide-react';
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://attendance-management-system-innoviast.onrender.com/api';
 
 export default function Login({ setToken, setUser }) {
   const [email, setEmail] = useState('');
