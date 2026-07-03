@@ -131,6 +131,6 @@ Groups records by session/date to minimize database writes (O(1) write per class
 
 ## Deployment Link
 
-[Insert Your Live Vercel/Render/Heroku Link Here]
+[Attendence Management System (AMS) - Innoviast](https://ams-innoviast.vercel.app/)
 
 ### Author: Muhammad Rayyan — Lahore, Pakistan.
