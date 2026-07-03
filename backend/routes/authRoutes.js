@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Import both controllers
-const { registerUser, loginUser, getUsers } = require('../controllers/authController');
+const { registerUser, loginUser, getUsers, updateUser, deleteUser } = require('../controllers/authController');
 const { protect, authorizeRoles } = require('../middleware/authMiddleware');
 
 // Define the routes

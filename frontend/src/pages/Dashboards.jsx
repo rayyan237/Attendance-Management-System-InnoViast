@@ -12,7 +12,13 @@ export default function Dashboards({ token, user }) {
         .then(res => res.json()).then(setStats);
     } else {
       fetch(`${API_URL}/reports/attendance?studentId=${user.id}`, { headers: { 'Authorization': `Bearer ${token}` } })
-        .then(res => res.json()).then(setStudentReports);
+        .then(res => res.json())
+        .then(data => {
+          // SAFEGUARD: Only set reports if data is actually an array
+          if (Array.isArray(data)) setStudentReports(data);
+          else setStudentReports([]);
+        })
+        .catch(() => setStudentReports([]));
     }
   }, [token, user]);
 

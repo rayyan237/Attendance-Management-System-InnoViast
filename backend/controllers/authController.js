@@ -113,8 +113,6 @@ exports.getUsers = async (req, res) => {
   }
 };
 
-const bcrypt = require('bcryptjs'); // Ensure this is at the top of the file
-
 // @desc    Update a user profile
 // @route   PUT /api/auth/users/:id
 exports.updateUser = async (req, res) => {

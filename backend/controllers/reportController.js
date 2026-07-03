@@ -36,7 +36,7 @@ exports.getDashboardSummary = async (req, res) => {
 exports.getAttendanceReport = async (req, res) => {
   try {
     // 1. Extract Query Parameters (e.g., ?classId=123&startDate=2026-07-01)
-    const { classId, startDate, endDate, status, studentId } = req.query;
+    const { classId, startDate, endDate, status } = req.query;
     let { studentId } = req.query; // Make this a let, not const
 
     // SECURITY OVERRIDE: If a Student is making this request, force the filter to their exact ID
