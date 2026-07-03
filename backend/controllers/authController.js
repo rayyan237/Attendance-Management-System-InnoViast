@@ -99,3 +99,16 @@ exports.loginUser = async (req, res) => {
     res.status(500).json({ message: 'Server Error during login' });
   }
 };
+
+// @desc    Get all users (Filterable by role)
+// @route   GET /api/auth/users
+exports.getUsers = async (req, res) => {
+  try {
+    const query = req.query.role ? { role: req.query.role } : {};
+    // Exclude passwords from the response!
+    const users = await User.find(query).select('-passwordHash'); 
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error fetching users' });
+  }
+};

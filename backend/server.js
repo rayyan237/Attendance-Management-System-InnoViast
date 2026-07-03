@@ -24,11 +24,13 @@ connectDB();
 const authRoutes = require('./routes/authRoutes');
 const classRoutes = require('./routes/classRoutes');
 const attendanceRoutes = require('./routes/attendanceRoutes');
+const reportRoutes = require('./routes/reportRoutes');
 
 // --- MOUNT ROUTES ---
 app.use('/api/auth', authRoutes);
 app.use('/api/classes', classRoutes);         // ADDED: Routes for class creation
 app.use('/api/attendance', attendanceRoutes); // ADDED: Routes for attendance
+app.use('/api/reports', reportRoutes);
 
 app.get('/', (req, res) => {
   res.send('Attendance API is running...');

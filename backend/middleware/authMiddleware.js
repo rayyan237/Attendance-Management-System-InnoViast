@@ -4,28 +4,21 @@ const User = require('../models/User');
 // 1. Verifies if the user is logged in
 exports.protect = async (req, res, next) => {
   let token;
-
-  // Check if the request header contains a token (Standard format: "Bearer <token>")
+  // Check headers OR URL query parameters
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    try {
-      // Extract just the token part
-      token = req.headers.authorization.split(' ')[1];
-
-      // Verify the token's wax seal using our secret key
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-      // Find the user in the database (excluding their password) and attach it to the request
-      req.user = await User.findById(decoded.id).select('-passwordHash');
-
-      // The keycard is valid. Pass them to the next function (the actual controller)
-      next();
-    } catch (error) {
-      return res.status(401).json({ message: 'Not authorized, token failed' });
-    }
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.query.token) {
+    token = req.query.token; // The fix for the CSV Export!
   }
 
-  if (!token) {
-    return res.status(401).json({ message: 'Not authorized, no token provided' });
+  if (!token) return res.status(401).json({ message: 'Not authorized, no token provided' });
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = await User.findById(decoded.id).select('-passwordHash');
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: 'Not authorized, token failed' });
   }
 };
 
