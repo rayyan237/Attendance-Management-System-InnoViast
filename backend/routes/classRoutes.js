@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createClass, getClasses } = require('../controllers/classController');
+const { createClass, getClasses, updateClass } = require('../controllers/classController');
 const { protect, authorizeRoles } = require('../middleware/authMiddleware');
 
 // @route POST /api/classes
@@ -10,5 +10,9 @@ router.post('/', protect, authorizeRoles('Admin', 'Instructor'), createClass);
 // @route GET /api/classes
 // Security: Must be logged in to view classes
 router.get('/', protect, getClasses);
+
+//@route PUT /api/classes/:id
+// (Restricted to Admins)
+router.put('/:id', protect, authorizeRoles('Admin'), updateClass);
 
 module.exports = router;

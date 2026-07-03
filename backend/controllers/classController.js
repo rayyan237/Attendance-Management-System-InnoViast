@@ -43,3 +43,19 @@ exports.getClasses = async (req, res) => {
     res.status(500).json({ message: 'Server Error fetching classes' });
   }
 };
+
+// @desc    Update a class (Change instructor or students)
+// @route   PUT /api/classes/:id
+exports.updateClass = async (req, res) => {
+  try {
+    const { className, instructorId, students } = req.body;
+    const updatedClass = await Class.findByIdAndUpdate(
+      req.params.id,
+      { className, instructorId, students },
+      { new: true }
+    );
+    res.status(200).json(updatedClass);
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error updating class' });
+  }
+};
