@@ -30,54 +30,54 @@ This is a full-stack, role-based digital attendance management system built for 
 
 ### Backend:
 
-_ Node.js & Express.js
+- Node.js & Express.js
 
-_ MongoDB & Mongoose (ODM)
+- MongoDB & Mongoose (ODM)
 
-_ JSON Web Tokens (JWT) for stateless authentication
+- JSON Web Tokens (JWT) for stateless authentication
 
-_ Bcryptjs for password hashing
+- Bcryptjs for password hashing
 
-_ json2csv for automated data flattening and export
+- json2csv for automated data flattening and export
 
 ## Setup Steps
 
-## 1. Clone the repository
-```
+### 1. Clone the repository
+```bash
 git clone <your-github-repo-link>
 cd <repository-folder>
 ```
 
-## 2. Backend Initialization
+### 2. Backend Initialization
 
 Open a terminal and navigate to the backend directory:
-```
+```bash
 cd backend
 npm install
 ```
 
 Create a .env file in the root of the backend directory:
-```
+```bash
 PORT=5000
 MONGO_URI=your_mongodb_atlas_connection_string
 JWT_SECRET=your_super_secret_jwt_signature_key
 ```
 
 Start the server:
-```
+```bash
 node server.js
 ```
 
 ## 3. Frontend Initialization
 
 Open a second terminal and navigate to the frontend directory:
-```
+```bash
 cd frontend
 npm install
 ```
 
 Start the React development server:
-```
+```bash
 npm run dev
 ```
 
@@ -87,7 +87,8 @@ The application will now be running on http://localhost:5173.
 
 The application utilizes a query-first NoSQL schema design optimized for fast read operations and simple relational population.
 
-1. Users Collection
+### 1. Users Collection
+
 Stores all platform users. Authentication is handled via a single collection to optimize login queries.
 
 - _id: ObjectId
@@ -100,7 +101,8 @@ Stores all platform users. Authentication is handled via a single collection to 
 
 - role: String (Enum: ['Admin', 'Instructor', 'Student'], Default: Student)
 
-2. Classes Collection
+### 2. Classes Collection
+
 Acts as the relational glue between Instructors and Students.
 
 - _id: ObjectId
@@ -111,7 +113,8 @@ Acts as the relational glue between Instructors and Students.
 
 - students: [ ObjectId ] (Ref: User)
 
-3. Attendances Collection
+### 3. Attendances Collection
+
 Groups records by session/date to minimize database writes (O(1) write per class session).
 
 - _id: ObjectId
@@ -130,4 +133,4 @@ Groups records by session/date to minimize database writes (O(1) write per class
 
 [Insert Your Live Vercel/Render/Heroku Link Here]
 
-Author: Muhammad Rayyan — Lahore, Pakistan.
+### Author: Muhammad Rayyan — Lahore, Pakistan.
