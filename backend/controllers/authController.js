@@ -112,3 +112,54 @@ exports.getUsers = async (req, res) => {
     res.status(500).json({ message: 'Server Error fetching users' });
   }
 };
+
+const bcrypt = require('bcryptjs'); // Ensure this is at the top of the file
+
+// @desc    Update a user profile
+// @route   PUT /api/auth/users/:id
+exports.updateUser = async (req, res) => {
+  try {
+    // Security: Only an Admin, OR the actual user themselves, can update this profile
+    if (req.user.role !== 'Admin' && req.user._id.toString() !== req.params.id) {
+      return res.status(403).json({ message: 'Not authorized to update this profile' });
+    }
+
+    const { name, email, password, role } = req.body;
+    const user = await User.findById(req.params.id);
+    
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    if (name) user.name = name;
+    if (email) user.email = email;
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      user.passwordHash = await bcrypt.hash(password, salt);
+    }
+    // Only admins can change a role
+    if (role && req.user.role === 'Admin') user.role = role;
+
+    await user.save();
+    res.status(200).json({ message: 'User updated successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error updating user' });
+  }
+};
+
+// @desc    Delete a user
+// @route   DELETE /api/auth/users/:id
+exports.deleteUser = async (req, res) => {
+  try {
+    const userToDelete = await User.findById(req.params.id);
+    if (!userToDelete) return res.status(404).json({ message: 'User not found' });
+    
+    // Architectural Rule: Admins cannot delete other Admins
+    if (userToDelete.role === 'Admin') {
+      return res.status(403).json({ message: 'Forbidden: Cannot delete Admin accounts' });
+    }
+
+    await User.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error deleting user' });
+  }
+};

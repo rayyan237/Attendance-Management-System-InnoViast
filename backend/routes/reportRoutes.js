@@ -7,7 +7,7 @@ const { protect, authorizeRoles } = require('../middleware/authMiddleware');
 router.get('/summary', protect, authorizeRoles('Admin', 'Instructor'), getDashboardSummary);
 
 // @route   GET /api/reports/attendance
-router.get('/attendance', protect, authorizeRoles('Admin', 'Instructor'), getAttendanceReport);
+router.get('/attendance', protect, authorizeRoles('Admin', 'Instructor', 'Student'), getAttendanceReport);
 
 // @route   GET /api/reports/export
 router.get('/export', protect, authorizeRoles('Admin', 'Instructor'), exportAttendanceCSV);
