@@ -1,139 +1,133 @@
-Institutional Attendance Operations Platform (InnoViast)
+# Innoviast Attendance Management System
 
-📌 Overview
+## Overview
 
-This is a full-stack, role-based attendance management system built for institutional and bootcamp environments. It allows administrators and instructors to create cohorts, track daily session attendance, and generate detailed, filterable reports with CSV export capabilities.
+This is a full-stack, role-based digital attendance management system built for institutional, bootcamp, and office team environments. Developed as a core task during my internship at Innoviast, this platform bridges a secure REST API with a modern React frontend. It allows administrators and instructors to provision user identities, compile cohorts, track daily session attendance, and extract filterable data logs through a high-contrast, glassmorphism-styled UI.
 
-Built as Assignment 1 for the InnoViast Full-Stack Product Engineering Track.
+## Features
 
-🚀 Features
+- Role-Based Access Control (RBAC): Distinct routing, UI rendering, and database permissions for three tiers: Admin, Instructor, and Student.
 
-Role-Based Access Control (RBAC): Distinct permissions for Admin, Instructor, and Student.
+- Identity Access Management: Admins can provision, modify, and terminate user credentials, with strict backend rules preventing the deletion of other Admins.
 
-JWT Authentication: Secure, stateless login and route protection.
+- Dynamic Cohort Configuration: Assign specific Lead Instructors to classes and toggle live student enrollments.
 
-Session Management: Upsert pattern implementation for clean, duplicate-free daily attendance records.
+- Frictionless Roll Call: Upsert pattern implementation for clean, duplicate-free daily attendance records (Present, Absent, Late).
 
-Advanced Reporting: Dynamic queries to filter attendance by date ranges, classes, and specific student statuses.
+- Advanced Reporting & Extraction: Dynamic queries to filter attendance logs by date ranges, specific cohorts, and student statuses, coupled with token-authenticated CSV exports.
 
-Data Export: Automated flattening of NoSQL data into downloadable CSV reports.
+- Student Hub: A secure, read-only dashboard where students can only query their specific attendance records.
 
-Dashboard Analytics: Concurrent data fetching for high-speed administrative summaries.
+## Tech Stack
 
-💻 Tech Stack
+### Frontend:
 
-Backend Engine: Node.js, Express.js
+- React.js
 
-Database: MongoDB, Mongoose (ODM)
+- Tailwind CSS (Custom glassmorphism & dark theme UI)
 
-Security: Bcryptjs (Password Hashing), JSON Web Tokens (JWT)
+- Lucide-React (Icons)
 
-Utilities: json2csv (Data Export), CORS, Dotenv
+### Backend:
 
-🗄️ Database Schema Design
+_ Node.js & Express.js
+
+_ MongoDB & Mongoose (ODM)
+
+_ JSON Web Tokens (JWT) for stateless authentication
+
+_ Bcryptjs for password hashing
+
+_ json2csv for automated data flattening and export
+
+## Setup Steps
+
+## 1. Clone the repository
+```
+git clone <your-github-repo-link>
+cd <repository-folder>
+```
+
+## 2. Backend Initialization
+
+Open a terminal and navigate to the backend directory:
+```
+cd backend
+npm install
+```
+
+Create a .env file in the root of the backend directory:
+```
+PORT=5000
+MONGO_URI=your_mongodb_atlas_connection_string
+JWT_SECRET=your_super_secret_jwt_signature_key
+```
+
+Start the server:
+```
+node server.js
+```
+
+## 3. Frontend Initialization
+
+Open a second terminal and navigate to the frontend directory:
+```
+cd frontend
+npm install
+```
+
+Start the React development server:
+```
+npm run dev
+```
+
+The application will now be running on http://localhost:5173.
+
+## Schema
 
 The application utilizes a query-first NoSQL schema design optimized for fast read operations and simple relational population.
 
 1. Users Collection
-
 Stores all platform users. Authentication is handled via a single collection to optimize login queries.
 
-_id: ObjectId
+- _id: ObjectId
 
-name: String (Required, Trimmed)
+- name: String (Required, Trimmed)
 
-email: String (Required, Unique)
+- email: String (Required, Unique)
 
-passwordHash: String (Required)
+- passwordHash: String (Required)
 
-role: String (Enum: ['Admin', 'Instructor', 'Student'], Default: Student)
-
-timestamps: true
+- role: String (Enum: ['Admin', 'Instructor', 'Student'], Default: Student)
 
 2. Classes Collection
-
 Acts as the relational glue between Instructors and Students.
 
-_id: ObjectId
+- _id: ObjectId
 
-className: String (Required, Unique)
+- className: String (Required, Unique)
 
-instructorId: ObjectId (Ref: User)
+- instructorId: ObjectId (Ref: User)
 
-students: [ ObjectId ] (Ref: User)
-
-timestamps: true
+- students: [ ObjectId ] (Ref: User)
 
 3. Attendances Collection
-
 Groups records by session/date to minimize database writes (O(1) write per class session).
 
-_id: ObjectId
+- _id: ObjectId
 
-classId: ObjectId (Ref: Class)
+- classId: ObjectId (Ref: Class)
 
-date: Date (Required)
+- date: Date (Required)
 
-records: Array of Objects
+- records: Array of Objects
 
-studentId: ObjectId (Ref: User)
+- studentId: ObjectId (Ref: User)
 
-status: String (Enum: ['Present', 'Absent', 'Late'])
+- status: String (Enum: ['Present', 'Absent', 'Late'])
 
-timestamps: true
+## Deployment Link
 
-🛠️ Local Setup Instructions
+[Insert Your Live Vercel/Render/Heroku Link Here]
 
-Clone the repository
-
-git clone <your-github-repo-link>
-cd ProjectName-InnoViast/backend
-
-
-Install Dependencies
-
-npm install
-
-
-Environment Variables
-Create a .env file in the root of the backend directory:
-
-PORT=5000
-MONGO_URI=your_mongodb_atlas_connection_string
-JWT_SECRET=your_super_secret_jwt_signature_key
-
-
-Run the Server
-
-node server.js
-
-
-The server will start on http://localhost:5000
-
-🔑 Sample Login Credentials
-
-For Mentor Review and Demo Video purposes, the following credentials have been seeded:
-
-Admin Account
-
-Email: admin@institute.com
-
-Password: admin123
-
-Role: Admin (Full Access)
-
-Instructor Account
-
-Email: instructor@institute.com
-
-Password: teach123
-
-Role: Instructor (Can create classes, mark attendance, view reports)
-
-Student Account
-
-Email: student@institute.com
-
-Password: student123
-
-Role: Student (Restricted Access)
+Author: Muhammad Rayyan — Lahore, Pakistan.
